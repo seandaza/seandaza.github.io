@@ -1,0 +1,160 @@
+I"�/
+<blockquote>
+  <p>El objetivo de este apartado es proporcionar las habilidades básicas para procesar y visualizar datos a partir de una base de datos relacional  mediante el lenguaje de programación Python.</p>
+</blockquote>
+
+<h3 id="definición"><a href="#header-2"></a>Definición</h3>
+
+<blockquote>
+  <p>Una Base de Datos es un sistema para archivar información en computadora, cuyo propósito general es mantener información y hacer que esté disponible cuando se solicite.</p>
+</blockquote>
+
+<h3 id="modelos-de-datos"><a href="#header-2"></a>Modelos de Datos</h3>
+
+<blockquote>
+  <p>Es una representación abstracta de los datos de una organización y las relaciones entre ellos. Un modelo de datos describe una organización.</p>
+</blockquote>
+
+<h3 id="tipos-de-modelos-de-datos"><a href="#header-2"></a>Tipos de Modelos de Datos</h3>
+
+<p>1.Lógicos Basados en Objetos :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a. Modelo Entidad-Realación
+b. Orientado a Objetos
+</code></pre></div></div>
+
+<p>2.Lógicos Basados en Registros:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a.  Relacional
+b.  Red
+c.  Jerárquico
+</code></pre></div></div>
+
+<p>3.Físicos de Datos</p>
+
+<h3 id="sentencias-sql"><a href="#header-2"></a>Sentencias SQL</h3>
+
+<blockquote>
+  <p>Algunas sentencias a tener presentes a la hora de trabajar con bases de datos son la siguientes:</p>
+</blockquote>
+
+<ol>
+  <li>Data Manipulation languaje (DML) : SELECT, INSERT, UPDATE, DELETE, MERGE.</li>
+  <li>Data Definition languaje (DDL) :  CREATE, ALTER, DROP, RENAME, TRUNCATE, COMMENT.</li>
+  <li>Data Control Languaje (DCL) : GRANT, REVOKE.</li>
+  <li>Transaction Control : COMMIT, ROLLBACK, SAVEPOINT.</li>
+</ol>
+
+<h3 id="-preliminares"><a href="#header-2"></a> Preliminares</h3>
+
+<blockquote>
+  <p>Antes que nada, es importante que almacenes en local la base de datos <code class="language-plaintext highlighter-rouge">hr.db</code> con la que estaremos trabajando para que no presentes problemas de conexión.</p>
+</blockquote>
+
+<blockquote>
+  <p>Esta base de datos comprende un conjunto de tablas que informan al respecto de los recursos humanos de una empresa. Entre las tablas estan: employees, departments, jobs, locations, countries, regions, dependents, job_grades.
+puedes ver el modelo Entidad-Relacion de la base de datos en el siguiente <a href="https://github.com/andresrosso/resources/blob/main/images/schema.png">Link</a>. Detalla cada tabla junto a las columnas que las componen.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">andresrosso</span><span class="o">/</span><span class="n">resources</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">coding</span><span class="o">/</span><span class="n">uan_gc_2021</span><span class="o">/</span><span class="n">hr</span><span class="p">.</span><span class="n">db</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">ls</span>
+</code></pre></div></div>
+<h3 id="-configuración"><a href="#header-2"></a> Configuración</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Standard libraries
+</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="n">px</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="c1"># Local server SQL database
+</span><span class="kn">import</span> <span class="nn">sqlite3</span> <span class="k">as</span> <span class="n">sq</span>
+
+<span class="c1"># Setting of Large numbers format
+</span><span class="n">pd</span><span class="p">.</span><span class="n">options</span><span class="p">.</span><span class="n">display</span><span class="p">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s">'{:,.2f}'</span><span class="p">.</span><span class="nb">format</span>
+
+<span class="c1"># Set data frame display max 10 rows
+</span><span class="n">pd</span><span class="p">.</span><span class="n">set_option</span><span class="p">(</span><span class="s">'display.max_rows'</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Warning is suppressed
+</span><span class="n">warnings</span><span class="p">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s">'ignore'</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="nb">FutureWarning</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Conexion a la base de datos llamada hr.db
+</span><span class="n">con</span> <span class="o">=</span> <span class="n">sq</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'hr.db'</span><span class="p">)</span>
+<span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Identidiquemos las tablas que contiene esta Base de Datos
+</span><span class="n">table_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SELECT name FROM sqlite_master WHERE type = 'table'"</span><span class="p">)]</span>
+
+<span class="c1"># Lista de Tablas
+</span><span class="k">print</span><span class="p">(</span><span class="n">table_list</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="consultas-sql-y-visualización-a-través-de-pandas"><a href="#header-4"></a>Consultas SQL y visualización a través de Pandas</h3>
+
+<blockquote>
+  <p>Enecerramos la consulta dentro de una variable, la procesamos a través de Pandas estableciendo conexion a la base de datos y la respuesta la guardamos de otra variable.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Consulta a SQL para ver la tabla 'employees'
+</span><span class="n">q0</span> <span class="o">=</span> <span class="p">(</span><span class="s">'select * from employees;'</span><span class="p">)</span>
+
+<span class="c1"># Convert the SQL query to Pandas data Frame
+</span><span class="n">r0</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q0</span><span class="p">,</span> <span class="n">con</span><span class="p">)</span>
+<span class="n">r0</span>
+</code></pre></div></div>
+<p>Esa consulta me trae toda la tabla. Pero si queremos visualizar solo algunas columnas de la tabla hacemos los siguiente:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># De la tabla 'employees' veamos solo algunas de sus columnas
+</span><span class="n">q1</span> <span class="o">=</span> <span class="p">(</span> <span class="s">'select first_name, last_name, email from employees;'</span><span class="p">)</span>
+
+<span class="c1"># Convert the SQL query to Pandas data Frame
+</span><span class="n">r1</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="n">con</span><span class="p">)</span>
+<span class="n">r1</span>
+</code></pre></div></div>
+
+<h3 id="filtrando-datos"><a href="#header-5"></a>Filtrando Datos</h3>
+
+<blockquote>
+  <p>Si queremos que nuestra búsqueda sea mas específica, usamos la sentencia WHERE, para dar mas detalle del dato que queremos visualizar a partir de uno de sus atributos.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># De la tabla 'employees' filtremos en funcion a un atributo
+</span><span class="n">q2</span> <span class="o">=</span> <span class="p">(</span><span class="s">'SELECT * from employees WHERE email = "diana.lorentz@sqltutorial.org"'</span><span class="p">)</span>
+
+<span class="c1"># Convert the SQL query to Pandas data Frame
+</span><span class="n">r2</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q2</span><span class="p">,</span> <span class="n">con</span><span class="p">)</span>
+<span class="n">r2</span>
+</code></pre></div></div>
+
+<p>Visualicemos ahora la tabla jobs:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Consultando toda la tabla 'jobs'
+</span><span class="n">q3</span> <span class="o">=</span> <span class="p">(</span><span class="s">'select * from jobs j '</span><span class="p">)</span>
+
+<span class="c1"># Convert the SQL query to Pandas data Frame
+</span><span class="n">r3</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q3</span><span class="p">,</span> <span class="n">con</span><span class="p">)</span>
+<span class="n">r3</span>
+</code></pre></div></div>
+
+<p>Podemos hacer una Descripción estadística de los datos de esa tabla usando el método .describe()</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">r3</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span> 
+</code></pre></div></div>
+
+<h3 id="graficando-datos"><a href="#header-5"></a>Graficando Datos</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Graficando los salarios máximos por categoría de Empleo
+</span><span class="n">fig1</span> <span class="o">=</span> <span class="n">px</span><span class="p">.</span><span class="n">bar</span><span class="p">(</span><span class="n">r3</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">"job_title"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">"max_salary"</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s">'v'</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">'Salario Maximo por Categoria de Empleo'</span><span class="p">)</span>
+<span class="n">fig1</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+<h3 id="operaciones-aritméticas-y-sentencia-as"><a href="#header-5"></a>Operaciones Aritméticas y Sentencia <strong>As</strong></h3>
+:ET

@@ -1,0 +1,301 @@
+I"l
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">Flask</code> es un framework para desarrollo web escrito en Python. Se puede utilizar para diversos tipos de aplicación, entre ellas, desarrollo de APIs. De hecho, es uno de los mejores frameworks de desarrollo para implementar este tipo de soluciones por lo sencillo que resulta y las facilidades que ofrece.</p>
+</blockquote>
+
+<blockquote>
+  <p>Existen muchas maneras de implementar un API REST con Flask. Desde usar el framework con lo que ofrece de base, hasta instalar varias extensiones con diferentes configuraciones.</p>
+</blockquote>
+
+<blockquote>
+  <p>En este Notebook veremos cómo consumir una API usando python flask en Google Colab a traves de <code class="language-plaintext highlighter-rouge">ngrok</code> para hacer la IP pública desde nuestro local.</p>
+</blockquote>
+
+<h3 id="ngrok"><a href="#header-2"></a>ngrok</h3>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">Ngrok</code> nos permite exponer a internet una URL generada dinámicamente, la cual apunta a un servicio web que se está ejecutando en nuestra máquina local. Por ejemplo: si tenemos un servicio web arrancado en http://localhost:8080, ngrok genera dinámicamente una URL del tipo http://xxxxxx.ngrok.io visible en internet, y que apunta directamente a nuestro localhost.</p>
+</blockquote>
+
+<h3 id="webservice-con-flask"><a href="#header-2"></a>Webservice con flask</h3>
+
+<blockquote>
+  <p>Nuestro objetivo en esta sección es  crear <code class="language-plaintext highlighter-rouge">werbservices</code> y hacer que corran en  <code class="language-plaintext highlighter-rouge">google colab</code> con la ayuda de <code class="language-plaintext highlighter-rouge">flask</code>. Para ello, veamos como funciona google colab(GC):</p>
+</blockquote>
+
+<blockquote>
+  <p>Cuando se ejecuta cualquier código en GC, este código se está ejecutando en una máquina virtual en mi entorno local <code class="language-plaintext highlighter-rouge">127.0.0.1</code>. Esta direccion ip no es accesible desde fuera. Para ello, <code class="language-plaintext highlighter-rouge">ngrok</code> nos ayuda a exponer esta ip y hacerla visible desde fuera en una url pública.</p>
+</blockquote>
+
+<blockquote>
+  <p>veamos como implementar esto de manera práctica:</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python code with syntax highlighting
+# Instalamos dependencias
+</span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">flask</span><span class="o">-</span><span class="n">ngrok</span>
+</code></pre></div></div>
+
+<p>En la salida de la siguiente ejecución, encontrarás dos url que corren nuestra aplicación en modo local y otra con extensión <code class="language-plaintext highlighter-rouge">ngrok.io</code>, la cual me expone mi aplicación en una url pública. Da click en ella y navega por las rutas que creamos.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python code with syntax highlighting
+# Instalamos dependencias
+</span><span class="kn">from</span> <span class="nn">flask_ngrok</span> <span class="kn">import</span> <span class="n">run_with_ngrok</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+
+<span class="c1">#Corramos la aplicación Flask
+</span><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span> 
+
+<span class="c1"># Necesitamos iniciar ngrok cuando la app este corriendo.
+</span><span class="n">run_with_ngrok</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+<span class="c1">#Definamos unas rutas
+</span>
+<span class="c1">#Ruta raiz
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span> <span class="p">():</span>
+  <span class="k">return</span> <span class="s">"&lt;h1&gt;Trail of Flask with Google Colab&lt;/h1&gt;"</span>
+
+<span class="c1">#Ruta get_details
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/get_details"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_details</span><span class="p">():</span>
+  <span class="k">return</span> <span class="s">"&lt;h1&gt;This is teh get details page!&lt;/h1&gt;"</span>
+
+<span class="c1">#ruta_test
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/test"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_page</span><span class="p">():</span>
+  <span class="k">return</span> <span class="s">"&lt;h1&gt;This is the test page&lt;/h1&gt;"</span>
+
+<span class="c1">#Ejecutemos la aplicacion
+</span><span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<h3 id="ejemplo"><a href="#header-4"></a>Ejemplo</h3>
+
+<blockquote>
+  <p>Nota: Para el siguiente ejemplo, es importante que guardes primero en local el archivo <code class="language-plaintext highlighter-rouge">products.py</code> para que puedas ejecutarlo. Puedes descargarlo ejecutando la siguiente linea de código:</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python code with syntax highlighting
+# Instalamos dependencias
+</span>
+<span class="err">!</span><span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="n">products</span><span class="p">.</span><span class="n">py</span>  <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">andresrosso</span><span class="o">/</span><span class="n">resources</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">coding</span><span class="o">/</span><span class="n">uan_gc_2021</span><span class="o">/</span><span class="n">products</span><span class="p">.</span><span class="n">py</span><span class="err">?</span><span class="n">raw</span><span class="o">=</span><span class="bp">True</span>
+</code></pre></div></div>
+
+<h3 id="creando-un-webservice"><a href="#header-5"></a>Creando un Webservice</h3>
+<p>Suponga que tiene una lista de productos informáticos almacenados en un documento <code class="language-plaintext highlighter-rouge">products.py</code> los cuales estan en formato <code class="language-plaintext highlighter-rouge">.json</code>. Necesitamos crear un webservice que me permita consultar los diversos productos y sus características, entonces para ello, creamos diferentes rutas que me permitan obtenerlos a través del método <code class="language-plaintext highlighter-rouge">GET</code>. Veamos:</p>
+
+<p>Ejecuta el siguiente código, ingresa a la url que entrega <code class="language-plaintext highlighter-rouge">ngrok</code> y navega por las diferentes rutas para que obtengas los datos.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python code with syntax highlighting
+# Instalamos dependencias
+</span><span class="kn">from</span> <span class="nn">flask_ngrok</span> <span class="kn">import</span> <span class="n">run_with_ngrok</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="c1"># Necesitamos iniciar ngrok cuando la app este corriendo.
+</span><span class="n">run_with_ngrok</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+
+
+
+<span class="c1">#Ruta raiz
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span> <span class="p">():</span>
+  <span class="k">return</span> <span class="s">"&lt;h1&gt;Office Products&lt;/h1&gt;</span><span class="se">\n</span><span class="s">&lt;p&gt;Here you found office products!&lt;/p&gt;</span><span class="se">\n</span><span class="s">&lt;u&gt;navigate to 'producs' rout for more details&lt;/u&gt;"</span>
+
+<span class="c1">#Ruta /ping que muestra un mensaje al visitarla
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/ping'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">ping</span> <span class="p">():</span>
+      <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">"message"</span><span class="p">:</span> <span class="s">"Pong"</span><span class="p">})</span>
+
+
+<span class="c1">#Ruta '/products'
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/products'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">getProducts</span><span class="p">():</span> 
+  <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">products</span><span class="p">)</span>
+
+<span class="c1">#Ruta '/products/XXXXXX'
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/products/&lt;string:product_name&gt;'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">getProduct</span><span class="p">(</span><span class="n">product_name</span><span class="p">):</span>
+      <span class="n">productsFound</span> <span class="o">=</span> <span class="p">[</span><span class="n">product</span> <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">products</span> <span class="k">if</span> <span class="n">product</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="o">==</span> <span class="n">product_name</span><span class="p">]</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">productsFound</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>     
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">"product"</span><span class="p">:</span> <span class="n">productsFound</span><span class="p">[</span><span class="mi">0</span><span class="p">]})</span>
+      <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">"message"</span><span class="p">:</span> <span class="s">"Product not found"</span><span class="p">})</span>
+
+
+<span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>En la primera ruta, cuando se navega a la ruta <code class="language-plaintext highlighter-rouge">'/ping'</code>, el navegador nos muestra en formato json un mensaje. 
+En la segunda ruta, cuando se navega a la ruta <code class="language-plaintext highlighter-rouge">'/products'</code>, el navegador nos muestra el conjunto total de porductos que se hayan en <code class="language-plaintext highlighter-rouge">products.py</code>.
+Si estando el la ruta de <code class="language-plaintext highlighter-rouge">/products</code> se navega a <code class="language-plaintext highlighter-rouge">/products/laptop</code> por ejemplo, entonces el navegador nos muestra detalle de ese producto en específico. Prueba navegando sobre los demas productos o sobre un producto inexistente para que veas lo que te muestra el navegador.</p>
+
+<h2 id="webservice-para-una-base-de-datos"><a href="#header-6"></a>Webservice para una base de Datos</h2>
+
+<blockquote>
+  <p>Nuestro objetivo será ahora exponer las consultas que podamos hacer desde base de datos local, a una url pública a través de <code class="language-plaintext highlighter-rouge">ngrok</code>.</p>
+</blockquote>
+
+<blockquote>
+  <p>Para ello, hay que tener en cuenta en primer lugar, que nuestra base de datos en este caso, es de tipo relacional; es decir, está conformada por una serie de tablas con información desplegada en las mismas. Es por ello, que en el proceso, hacemos las consultas a la base de datos a través de <code class="language-plaintext highlighter-rouge">sqlite3</code> y luego transformamos los DataFrames en diccionarios para poder de esta manera, construír las rutas a través de sus llaves.</p>
+</blockquote>
+
+<blockquote>
+  <p>Para el siguiente ejemplo, descargue la base de datos <code class="language-plaintext highlighter-rouge">hr.db</code> en la siguiente ejecución de código. Esta base de datos como ya dijimos, consta de una serie de datos de recursos humanos de detrminada empresa.</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python code with syntax highlighting
+</span><span class="err">!</span><span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="n">hr</span><span class="p">.</span><span class="n">db</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">andresrosso</span><span class="o">/</span><span class="n">resources</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">coding</span><span class="o">/</span><span class="n">uan_gc_2021</span><span class="o">/</span><span class="n">hr</span><span class="p">.</span><span class="n">db</span><span class="err">?</span><span class="n">raw</span><span class="o">=</span><span class="n">true</span><span class="o">/</span>
+</code></pre></div></div>
+<p>Importemos las dependecias necesarias</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python code with syntax highlighting
+# Importemos Librerías
+</span><span class="kn">import</span> <span class="nn">sqlite3</span> <span class="k">as</span> <span class="n">sq</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">sqlite3</span> <span class="kn">import</span> <span class="n">Error</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">jsonify</span>
+<span class="kn">import</span> <span class="nn">json</span>
+</code></pre></div></div>
+<p>Establezcamos conexión con la base de datos</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python code with syntax highlighting
+# Conexion a la base de datos llamada hr.db
+</span><span class="n">conn</span> <span class="o">=</span> <span class="n">sq</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'hr.db'</span><span class="p">)</span>
+<span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p>Para un mejor reconocimento de las tablas que comprenden esta base de datos, listemos las tablas ejecutando el siguiente código:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python code with syntax highlighting
+</span>
+<span class="c1"># Identifiquemos las tablas que contiene esta Base de Datos
+</span><span class="n">tables_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SELECT name FROM sqlite_master WHERE type = 'table'"</span><span class="p">)]</span>
+
+<span class="c1"># Lista de Tablas
+</span><span class="k">print</span><span class="p">(</span><span class="n">tables_list</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Elijamos una de las Tablas mostradas y establezcamos un webservice para ella:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">#Webservice para Tabla 'employees':
+</span>
+<span class="c1"># Conexion a la base de datos llamada hr.db
+</span><span class="n">conn</span> <span class="o">=</span> <span class="n">sq</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'hr.db'</span><span class="p">)</span>
+<span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+
+
+<span class="c1"># Definiendo la Consulta a la BD
+</span><span class="n">q1</span> <span class="o">=</span> <span class="p">(</span><span class="s">'select * from employees '</span><span class="p">)</span>
+
+<span class="c1"># Convert the SQL query to Pandas data Frame
+</span><span class="n">r1</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
+
+<span class="c1"># Convirtiendo el DataFrame 'employees' en Diccionario
+</span><span class="n">result1</span> <span class="o">=</span> <span class="n">r1</span><span class="p">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+<span class="c1">#Listando las columnas del DataFrame 'employees'
+</span><span class="n">container1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">result1</span><span class="p">)</span>
+<span class="n">container1</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python code with syntax highlighting
+</span>
+<span class="c1">#Corremos la aplicacion flask
+</span><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># Iniciamos ngrok cuando la app este corriendo.
+</span><span class="n">run_with_ngrok</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+<span class="c1">#Ruta raiz
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span> <span class="p">():</span>
+  <span class="k">return</span> <span class="s">"&lt;h1&gt;Employees Table&lt;/h1&gt;</span><span class="se">\n</span><span class="s">&lt;p&gt;Principal Route: 'employees'&lt;/p&gt;</span><span class="se">\n</span><span class="s">&lt;u&gt;Subroutes:&lt;/u&gt;&lt;ul&gt;&lt;li&gt;employee_id&lt;/li&gt;&lt;li&gt;first_name&lt;/li&gt;&lt;li&gt;last_name&lt;/li&gt;&lt;li&gt;email&lt;/li&gt;&lt;li&gt;phone_number&lt;/li&gt;&lt;li&gt;hire_date&lt;/li&gt;&lt;li&gt;job_id&lt;/li&gt;&lt;li&gt;salary&lt;/li&gt;&lt;li&gt;manager_id&lt;/li&gt;&lt;li&gt;department_id&lt;/li&gt;&lt;/ul&gt;"</span>
+
+
+<span class="c1">#Ruta para la Tabla Empleados
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/employees'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">getEmployees</span><span class="p">():</span> 
+  <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result1</span><span class="p">)</span>
+
+
+<span class="c1">#Subrutas de la Tabla Empleados
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/employees/&lt;string:atributes_employee&gt;'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">getProduct</span><span class="p">(</span><span class="n">atributes_employee</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">atributes_employee</span> <span class="ow">in</span> <span class="n">container1</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result1</span><span class="p">[</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">atributes_employee</span><span class="si">}</span><span class="s">'</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">"message"</span><span class="p">:</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">atributes_employee</span><span class="si">}</span><span class="s"> not Found!"</span><span class="p">})</span>
+
+ 
+ 
+
+<span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+
+
+</code></pre></div></div>
+
+<hr />
+<p>Creemos ahora el Webservice para la Tabla ‘departments’. El procediiento es el mismo, solo que cambiaremos el nombre de algunas variables haciendo uso de indices numericos para preservar el sentido de las mismas.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python code with syntax highlighting
+</span>
+<span class="c1">#Webservice para Tabla 'departments':
+</span>
+<span class="c1"># Conexion a la base de datos llamada hr.db
+</span><span class="n">conn</span> <span class="o">=</span> <span class="n">sq</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'hr.db'</span><span class="p">)</span>
+<span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+
+
+<span class="c1"># Definiendo la Consulta a la BD
+</span><span class="n">q2</span> <span class="o">=</span> <span class="p">(</span><span class="s">'select * from departments '</span><span class="p">)</span>
+
+<span class="c1"># Convert the SQL query to Pandas data Frame
+</span><span class="n">r2</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">q2</span><span class="p">,</span> <span class="n">conn</span><span class="p">)</span>
+
+<span class="c1"># Convirtiendo el DataFrame 'employees' en Diccionario
+</span><span class="n">result2</span> <span class="o">=</span> <span class="n">r2</span><span class="p">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+<span class="c1">#Listando las columnas del DataFrame 'employees'
+</span><span class="n">container2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">result2</span><span class="p">)</span>
+<span class="n">container2</span>
+
+</code></pre></div></div>
+<p>Comprueba el Webservice y navega por sus Subrutas:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Python code with syntax highlighting
+</span>
+<span class="c1">#Corremos la aplicacion flask
+</span><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># Iniciamos ngrok cuando la app este corriendo.
+</span><span class="n">run_with_ngrok</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+
+<span class="c1">#Ruta para la Tabla Empleados
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/departments'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">getEmployees</span><span class="p">():</span> 
+  <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result2</span><span class="p">)</span>
+
+
+<span class="c1">#Subrutas de la Tabla Empleados
+</span><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">'/departments/&lt;string:atributes_employee&gt;'</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">'GET'</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">getProduct</span><span class="p">(</span><span class="n">atributes_employee</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">atributes_employee</span> <span class="ow">in</span> <span class="n">container2</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result2</span><span class="p">[</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">atributes_employee</span><span class="si">}</span><span class="s">'</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s">"message"</span><span class="p">:</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">atributes_employee</span><span class="si">}</span><span class="s"> not Found!"</span><span class="p">})</span>
+
+ 
+ 
+
+<span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+
+</code></pre></div></div>
+:ET
