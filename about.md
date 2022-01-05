@@ -2,12 +2,12 @@
 layout: page
 title: About Me
 ---
-**Name**
+<span style ="color:red">Name</span>
 
 Sean Daza
 
 
-**Background**
+<span style ="color:red">Background</span>
 
 Bachelor in Mathematics
 
@@ -15,12 +15,12 @@ Knowledgeable in some programmming languages such as C++ , R and Python,experien
 preparation; with logical and numerical skills focused on Data Analysis,Interpretation and Organization.
 
 
-**Work Experience**
+<span style ="color:red">Work Experience</span>
 
-Webscrapping with Selenium, QA Automation, Python,React,NodeJs,MongoDB
+Webscrapping with Selenium, QA Automation, Python,React,NodeJs, Postman, MongoDB
 
 
-**Awards and Honors**
+<span style ="color:red">Awards and Honors</span>
 
 Founder of Mathematics Students Association.
 Special Distinction for Olympic Math Games.
