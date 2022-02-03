@@ -6,7 +6,7 @@ CREATED BY: SEAN DAZA
 `https://github.com/seandaza` 
 
 VISIT THE DEPLOY OF THIS APPLICATION HERE:
-[Link](netflix-clone-2022.netlify.app)
+[netflix-clone-2022.netlify.app](netflix-clone-2022.netlify.app)
 
 FOR CODE DETAILS, VISIT MY GITHUB ACOUNT:
-[Link](https://github.com/seandaza)
+[https://github.com/seandaza](https://github.com/seandaza)
