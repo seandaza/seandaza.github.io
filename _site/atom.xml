@@ -12,6 +12,29 @@
     </author>
     
       <item>
+        <title>Web3.0</title>
+        <description>
+&lt;p&gt;OBJECTIVE:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Connect a web application with the blockchain network for Ethereum.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;CREATED BY: SEAN DAZA
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://github.com/seandaza&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;VISIT THE DEPLOY OF THIS APPLICATION HERE:
+&lt;a href=&quot;https://nextjs-blog-web3-0.vercel.app&quot;&gt;https://nextjs-blog-web3-0.vercel.app&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;FOR CODE DETAILS, VISIT MY GITHUB ACOUNT:
+&lt;a href=&quot;https://github.com/seandaza&quot;&gt;https://github.com/seandaza&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 10 Feb 2022 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000//Web3.0</link>
+        <link href="http://localhost:4000/Web3.0"/>
+        <guid isPermaLink="true">http://localhost:4000/Web3.0</guid>
+      </item>
+    
+      <item>
         <title>Netflix Clone</title>
         <description>
 &lt;p&gt;OBJECTIVE:&lt;/p&gt;
