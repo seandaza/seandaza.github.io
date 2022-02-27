@@ -1,7 +1,7 @@
 
 OBJECTIVE:
 > Create a user registration table that incorporates through javascript the following functions:
-1. ** Create**
+1. **Create**
 2. **Read (default)**
 2. **Update**
 3. **Delete**
